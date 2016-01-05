@@ -30,6 +30,7 @@ PLATFORMS
 
 DEPENDENCIES
   activerecord
+  activesupport
   mysql2
   sqlite3
 
