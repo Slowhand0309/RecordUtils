@@ -1,5 +1,6 @@
 # encoding: utf-8
-require_relative 'recordbase'
+#require 'active_support'
+#require_relative 'recordbase'
 
 module RecordUtils
   class RecordClear < RecordBase
