@@ -26,8 +26,15 @@ module RecordUtils
       maps = models.map do |m|
         SERIALIZER[type].to_proc.call(m.all)
       end
-      p maps
+
+      write(type, maps)
     end
 
+    def write(type, datas)
+      filename = "dump/dump." + type.to_s
+      File.open(filename, "w:utf-8") do |f|
+        f.write(datas)
+      end
+    end
   end
 end
