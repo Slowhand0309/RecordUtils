@@ -9,6 +9,11 @@ RSpec.describe RecordUtils::RecordClear do
     r = RecordUtils::RecordClear.new
     r.connect
 
-    #r.clear_all
+    r.clear_all
+    models =  r.get_models
+
+    models.each do |m|
+      expect(m.all.size).to eq 0
+    end
   end
 end

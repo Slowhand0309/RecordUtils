@@ -18,7 +18,7 @@ RSpec.describe RecordUtils::RecordDump do
     if File.exist?("dump/dump.json")
       File.delete("dump/dump.json")
     end
-  
+
     r = RecordUtils::RecordDump.new
     r.connect
 
@@ -26,5 +26,19 @@ RSpec.describe RecordUtils::RecordDump do
     r.dump(type)
 
     expect(File.exist?("dump/dump.json")).to eq true
+  end
+
+  it 'xml' do
+    if File.exist?("dump/dump.xml")
+      File.delete("dump/dump.xml")
+    end
+
+    r = RecordUtils::RecordDump.new
+    r.connect
+
+    type = :xml
+    r.dump(type)
+
+    expect(File.exist?("dump/dump.xml")).to eq true
   end
 end
