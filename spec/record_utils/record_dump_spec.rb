@@ -5,6 +5,7 @@ require "spec_helper"
 
 RSpec.describe RecordUtils::RecordDump do
 
+  # insert sample data.
   before do
     r = RecordUtils::RecordDump.new
     r.connect
