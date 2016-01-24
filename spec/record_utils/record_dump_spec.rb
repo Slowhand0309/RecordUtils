@@ -5,6 +5,17 @@ require "spec_helper"
 
 RSpec.describe RecordUtils::RecordDump do
 
+  before do
+    r = RecordUtils::RecordDump.new
+    r.connect
+    models =  r.get_models
+    models.each do |m|
+      m.id = 1
+      m.name = "aaa"
+      m.save
+    end
+  end
+
   it 'unsupport type' do
     r = RecordUtils::RecordDump.new
     r.connect

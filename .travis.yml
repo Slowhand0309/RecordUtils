@@ -3,3 +3,8 @@ rvm:
   - "1.9.3"
   - "2.0.0"
   - "2.1.0"
+before_script:
+  - mysql -uroot -e "create database test"
+  - mysql -uroot -e "create table test.user (id int(11), name varchar)"
+  - mysql -uroot -e "create table test.master (id int(11), name varchar)"
+  - mysql -uroot -e "create table test.temp (id int(11), name varchar)"

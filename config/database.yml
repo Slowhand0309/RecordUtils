@@ -1,6 +1,6 @@
  development:
    adapter: mysql2
    host: localhost
-   username: XXXXX
-   password: XXXXX
-   database: XXXXX
+   username: root
+   password:
+   database: test
