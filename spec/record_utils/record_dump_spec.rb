@@ -5,24 +5,12 @@ require "spec_helper"
 
 RSpec.describe RecordUtils::RecordDump do
 
-  # insert sample data.
-  before do
-    r = RecordUtils::RecordDump.new
-    r.connect
-    models =  r.get_models
-    models.each do |m|
-      m.id = 1
-      m.name = "aaa"
-      m.save
-    end
-  end
-
   it 'unsupport type' do
     r = RecordUtils::RecordDump.new
     r.connect
 
     type = :xxx
-    expect{r.dump(type)}.to raise_error(ArgumentError, "not support type #{type}")
+    expect{r.dump("hoge", type)}.to raise_error(ArgumentError, "not support type #{type}")
   end
 
   it 'json' do
@@ -35,7 +23,7 @@ RSpec.describe RecordUtils::RecordDump do
     r.connect
 
     type = :json
-    r.dump(type)
+    r.dump("dump/dump.json", type)
 
     expect(File.exist?("dump/dump.json")).to eq true
   end
@@ -49,8 +37,22 @@ RSpec.describe RecordUtils::RecordDump do
     r.connect
 
     type = :xml
-    r.dump(type)
+    r.dump("dump/dump.xml", type)
 
     expect(File.exist?("dump/dump.xml")).to eq true
+  end
+
+  it 'yaml' do
+    if File.exist?("dump/dump.yaml")
+      File.delete("dump/dump.yaml")
+    end
+
+    r = RecordUtils::RecordDump.new
+    r.connect
+
+    type = :yaml
+    r.dump("dump/dump.yaml", type)
+
+    expect(File.exist?("dump/dump.yaml")).to eq true
   end
 end

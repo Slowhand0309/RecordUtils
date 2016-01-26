@@ -8,7 +8,7 @@ module RecordUtils
     :xml => :to_xml,
 #    :csv => :to_csv, # not yet support
     :json => :to_json,
-#    :yaml => :to_yaml # not yet support
+    :yaml => :to_yaml
   }
 
   class RecordDump < RecordBase
@@ -17,7 +17,7 @@ module RecordUtils
       super
     end
 
-    def dump(type)
+    def dump(filename, type = :json)
       if !SERIALIZER.include?(type)
         raise ArgumentError, "not support type #{type}"
       end
@@ -27,11 +27,11 @@ module RecordUtils
         SERIALIZER[type].to_proc.call(m.all)
       end
 
-      write(type, maps)
+      write(filename, type, maps)
     end
 
-    def write(type, datas)
-      filename = "dump/dump." + type.to_s
+    private
+    def write(filename, type, datas)
       File.open(filename, "w:utf-8") do |f|
         f.write(datas)
       end
