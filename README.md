@@ -38,7 +38,7 @@ r.dump(:json)
   1. json
   2. xml
   3. csv => not yet
-  4. yaml => not yet
+  4. yaml
 
 
 ## Licence
