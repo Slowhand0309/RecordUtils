@@ -33,18 +33,32 @@ module RecordUtils
     end
 
     def get_models
+      fetch.values
+    end
+
+    def get_model(table_name)
+      name = table_name.instance_of?(Symbol) ? table_name : table_name.to_sym
+      fetch[name]
+    end
+
+    def fetch
       @cahce.fetch(MEMORY_STORE_KEY) do
         # get models if cahce empty
         tables =  ActiveRecord::Base.connection.tables
-        models = Array.new
+        models = {}
         tables.each do |table|
           cls = self.class.const_set(table.classify, Class.new(ActiveRecord::Base))
           cls.table_name = table
-          models << cls
+          models[table.to_sym] = cls
         end
         models
       end
       return @cahce.fetch(MEMORY_STORE_KEY)
     end
+
+    def clear_cache
+      @cache.clear
+    end
+
   end
 end
