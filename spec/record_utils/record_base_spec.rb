@@ -5,16 +5,26 @@ require "spec_helper"
 
 RSpec.describe RecordUtils::RecordBase do
 
-  it 'all tables convert models' do
-    r = RecordUtils::RecordBase.new
-    r.connect
+  let(:rb) { RecordUtils::RecordBase.new }
 
-    tables = ActiveRecord::Base.connection.tables
-    models =  r.get_models
+  before do
+    rb.connect
+  end
 
-    expect(models.size).to eq tables.size
-    models.each_with_index do |m, idx|
-      expect(m.table_name).to eq tables[idx]
+  after do
+    ActiveRecord::Base.remove_connection
+  end
+
+  describe 'base functions test' do
+    it 'all tables convert models' do
+
+      tables = ActiveRecord::Base.connection.tables
+      models =  rb.get_models
+
+      expect(models.size).to eq tables.size
+      models.each_with_index do |m, idx|
+        expect(m.table_name).to eq tables[idx]
+      end
     end
   end
 end

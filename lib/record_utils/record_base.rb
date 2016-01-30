@@ -7,6 +7,8 @@ require 'active_support/cache'
 
 module RecordUtils
   class RecordBase
+    prepend RecordDump
+    prepend RecordClear
 
     CONFIG_YML = 'config/database.yml'
     DB_ENV = 'development'
@@ -43,6 +45,7 @@ module RecordUtils
 
     def fetch
       @cahce.fetch(MEMORY_STORE_KEY) do
+        puts "fetch"
         # get models if cahce empty
         tables =  ActiveRecord::Base.connection.tables
         models = {}
@@ -53,7 +56,7 @@ module RecordUtils
         end
         models
       end
-      return @cahce.fetch(MEMORY_STORE_KEY)
+      # return @cahce.fetch(MEMORY_STORE_KEY)
     end
 
     def clear_cache

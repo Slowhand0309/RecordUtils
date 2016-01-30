@@ -11,11 +11,7 @@ module RecordUtils
     :yaml => :to_yaml
   }
 
-  class RecordDump < RecordBase
-
-    def initialize
-      super
-    end
+  module RecordDump
 
     def dump(filename, type = :json)
       if !SERIALIZER.include?(type)
@@ -30,7 +26,6 @@ module RecordUtils
       write(filename, type, maps)
     end
 
-    private
     def write(filename, type, datas)
       File.open(filename, "w:utf-8") do |f|
         f.write(datas)

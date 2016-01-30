@@ -5,54 +5,54 @@ require "spec_helper"
 
 RSpec.describe RecordUtils::RecordDump do
 
-  it 'unsupport type' do
-    r = RecordUtils::RecordDump.new
-    r.connect
+  let(:rb) { RecordUtils::RecordBase.new }
 
-    type = :xxx
-    expect{r.dump("hoge", type)}.to raise_error(ArgumentError, "not support type #{type}")
+  before do
+    rb.connect
   end
 
-  it 'json' do
-
-    if File.exist?("dump/dump.json")
-      File.delete("dump/dump.json")
-    end
-
-    r = RecordUtils::RecordDump.new
-    r.connect
-
-    type = :json
-    r.dump("dump/dump.json", type)
-
-    expect(File.exist?("dump/dump.json")).to eq true
+  after do
+    ActiveRecord::Base.remove_connection
   end
 
-  it 'xml' do
-    if File.exist?("dump/dump.xml")
-      File.delete("dump/dump.xml")
+  describe 'dump functions test' do
+
+    it 'unsupport type' do
+      type = :xxx
+      expect{rb.dump("hoge", type)}.to raise_error(ArgumentError, "not support type #{type}")
     end
 
-    r = RecordUtils::RecordDump.new
-    r.connect
-
-    type = :xml
-    r.dump("dump/dump.xml", type)
-
-    expect(File.exist?("dump/dump.xml")).to eq true
-  end
-
-  it 'yaml' do
-    if File.exist?("dump/dump.yaml")
-      File.delete("dump/dump.yaml")
+    it 'json' do
+      dump_test("dump/dump.json", :json)
     end
 
-    r = RecordUtils::RecordDump.new
-    r.connect
+    it 'xml' do
+      dump_test("dump/dump.xml", :xml)
+    end
 
-    type = :yaml
-    r.dump("dump/dump.yaml", type)
+    it 'yaml' do
+      dump_test("dump/dump.yaml", :yaml)
+    end
 
-    expect(File.exist?("dump/dump.yaml")).to eq true
+    it 'csv' do
+      if File.exist?("dump/dump.csv")
+        File.delete("dump/dump.csv")
+      end
+
+      type = :csv
+      rb.dump("dump/dump.csv", type)
+
+      #expect(File.exist?("dump/dump.csv")).to eq true
+    end
+
+    def dump_test(file, type)
+      if File.exist?(file)
+        File.delete(file)
+      end
+
+      rb.dump(file, type)
+      expect(File.exist?(file)).to eq true
+    end
+
   end
 end

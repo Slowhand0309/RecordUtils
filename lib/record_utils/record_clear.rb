@@ -3,11 +3,7 @@
 #require_relative 'recordbase'
 
 module RecordUtils
-  class RecordClear < RecordBase
-
-    def initialize
-      super
-    end
+  module RecordClear
 
     def clear_all
       models = get_models()
