@@ -1,12 +1,12 @@
 # encoding: utf-8
-
+require 'record_utils/ext/csv.rb'
 
 module RecordUtils
 
   SERIALIZER =
   {
     :xml => :to_xml,
-#    :csv => :to_csv, # not yet support
+    :csv => :to_csv,
     :json => :to_json,
     :yaml => :to_yaml
   }
