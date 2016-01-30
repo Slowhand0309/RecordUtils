@@ -16,7 +16,7 @@ dump of data and get the current state and etc...
 ```ruby
 require 'record_utils'
 
-r = RecordUtils::RecordClear.new
+r = RecordUtils::RecordBase.new
 r.connect
 r.clear_all
 ```
@@ -28,7 +28,7 @@ r.clear_all
 ```ruby
 require 'record_utils'
 
-r = RecordUtils::RecordDump.new
+r = RecordUtils::RecordBase.new
 r.connect
 r.dump(:json)
 ```
